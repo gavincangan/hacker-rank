@@ -11,14 +11,41 @@ int main()
 
     std::forward_list<int>::iterator liter1, liter2;
 
-    liter1 = input_list.begin();
-    liter1 = std::next(liter1);
+    std::cout<<"Input list: ";
+    for(int i:input_list)
+        std::cout<<i<<" ";
+    std::cout<<std::endl;
 
-    liter2 = input_list.begin();
-    liter2 = std::next(liter1);
+    liter1 = input_list.begin();
+
+    liter2 = liter1;
+    liter2++;
 
     while(1)
     {
 
+        input_list.push_front( *liter2 );
+        liter2 = input_list.erase_after( liter1 );
+
+        // for(int i:input_list)
+        //     std::cout<<i<<" ";
+        // std::cout<<std::endl;
+
+        if(liter2 == input_list.end())
+        {
+            // std::cout<<"\nEnd of procedure\n";
+            break;
+        }
+        else
+        {
+            // std::cout<<"\nContinue iteration\n";
+        }
+
+        // std::cout<<'\n';
     }
+
+    std::cout<<"Input list after reversing: ";
+    for(int i:input_list)
+        std::cout<<i<<" ";
+    std::cout<<std::endl;
 }

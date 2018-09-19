@@ -18,6 +18,7 @@ Subset      Sum
 
 #include <bits/stdc++.h>
 #include <algorithm> 
+#include <limits>
 
 using namespace std;
 
@@ -27,7 +28,7 @@ vector<string> split_string(string);
 int maxSubsetSum(vector<int> arr)
 {
     uint16_t arr_len = arr.size();
-    vector<int> max_val(arr_len, -9999);
+    vector<int> max_val(arr_len, std::numeric_limits<int>::min());
     int temp_max = 0;
     uint16_t look_back_ix = 0;
 
@@ -41,7 +42,7 @@ int maxSubsetSum(vector<int> arr)
             look_back_ix++;
 
         temp_max = max( max_val[ix-look_back_ix], arr[ix]+max_val[ix-look_back_ix] );
-        temp_max = max( arr[ix-look_back_ix], temp_max );
+        // temp_max = max( arr[ix-look_back_ix], temp_max );
         max_val[ix] = max( max_val[ix], temp_max );
     }
 

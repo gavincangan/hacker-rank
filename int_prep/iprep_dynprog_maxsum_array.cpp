@@ -30,29 +30,21 @@ int maxSubsetSum(vector<int> arr)
     uint16_t arr_len = arr.size();
     vector<int> max_val(arr_len, std::numeric_limits<int>::min());
     int temp_max = 0;
-    uint16_t look_back_ix = 0;
 
-    max_val[0] = arr[0];
-    max_val[1] = arr[1];
+    max_val[0] = std::max( arr[0], 0);
+    max_val[1] = std::max( arr[1], 0);
 
-    for(int ix = 2; ix<arr_len; ix++)
+    //maxval[2]
+    temp_max = std::max( arr[1], 0);
+    temp_max = std::max( temp_max, arr[0] );
+    max_val[2] = temp_max;
+
+    for(int ix = 3; ix<arr_len; ix++)
     {
-        look_back_ix = 2;
-        while( arr[look_back_ix]<0 && look_back_ix >= 0)
-            look_back_ix++;
-
-        temp_max = max( max_val[ix-look_back_ix], arr[ix]+max_val[ix-look_back_ix] );
-        // temp_max = max( arr[ix-look_back_ix], temp_max );
-        max_val[ix] = max( max_val[ix], temp_max );
+        temp_max = max( arr[ix], 0 );
+        temp_max = max( temp_max, temp_max + max_val[ix-2] );
+        max_val[ix] = max( temp_max, max_val[ix-3] );
     }
-
-    // cout<<"\n";
-    // for(int a:arr)
-    //     cout<<a<<"\t";
-    // cout<<"\n";
-    // for(int a:max_val)
-    //     cout<<a<<"\t";
-    // cout<<"\n";
 
     temp_max = *max_element( max_val.begin(), max_val.end() );
 

@@ -29,27 +29,26 @@ int maxSubsetSum(vector<int> arr)
 {
     uint16_t arr_len = arr.size();
     vector<int> max_val(arr_len, std::numeric_limits<int>::min());
-    int temp_max = 0;
+    int temp_max = 0, zero_max = 0;
 
     max_val[0] = std::max( arr[0], 0);
     max_val[1] = std::max( arr[1], 0);
 
     //maxval[2]
-    temp_max = std::max( arr[1], 0);
-    temp_max = std::max( temp_max, arr[0] );
+    zero_max = std::max( arr[2], 0);
+    temp_max = std::max( temp_max, max_val[0] + zero_max );
     max_val[2] = temp_max;
 
     for(int ix = 3; ix<arr_len; ix++)
     {
-        temp_max = max( arr[ix], 0 );
-        temp_max = max( temp_max, temp_max + max_val[ix-2] );
-        max_val[ix] = max( temp_max, max_val[ix-3] );
+        zero_max = max( arr[ix], 0 );
+        temp_max = max( zero_max, max_val[ix-2] + zero_max );
+        max_val[ix] = max( temp_max, max_val[ix-3] + zero_max );
     }
 
     temp_max = *max_element( max_val.begin(), max_val.end() );
 
     return temp_max;
-
 }
 
 int main()

@@ -8,7 +8,9 @@ class Board
     public:
     const size_t sizex, sizey;
     std::array< std::array<uint32_t, _sizex>, _sizey > board;
-    const std::vector< std::pair<int, int> > kmoves = { {-2, -1}, {-2, 1}, {2, -1}, {2, 1}, {1, -2}, {1, 2}, {-1, -2}, {-1, 2} };
+    // const std::vector< std::pair<int, int> > kmoves = { {-2, -1}, {-2, 1}, {2, -1}, {2, 1}, {1, -2}, {1, 2}, {-1, -2}, {-1, 2} };
+    
+    const std::vector< std::pair<int, int> > kmoves = { {2, 1}, {1, 2}, {-1, 2}, {-2, 1}, {-2, -1}, {-1, -2}, {1, -2}, {2, -1} };
     // template<typename std::size_t _sizex, std::size_t _sizey>
     Board< _sizex, _sizey >(): sizex(_sizex), sizey(_sizey), board({}) {}
 
@@ -70,9 +72,14 @@ bool nextKnightStep( Board<_sizex, _sizey>& board, int cx, int cy, uint32_t step
     bool is_okay = false;
     for( auto move : board.kmoves )
     {
+        is_okay = false;
         if( board.is_passable( cx+move.first, cy+move.second ) )
         {
-            is_okay |= nextKnightStep( board, cx+move.first, cy+move.second, step_count + 1 );
+            is_okay = nextKnightStep( board, cx+move.first, cy+move.second, step_count + 1 );
+            if(is_okay)
+            {
+                return true;
+            }
         }
     }
     if(!is_okay)
